@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <script src="./js/index.js"></script>
+
+    <title>Get Grades</title>
+    <!-- <link rel="stylesheet" href="./css/design.css"> -->
+    <link rel="icon" href="./images/CAT.png">
+    <link rel="stylesheet" href="./css/design.css">    
+    
+    
+</head>
+
+<body>
+    <h1>Get Grades</h1>
+
+    <div id="container">
+        School email:
+        <input type="email" id="school_email" autocomplete="off">
+        <br>
+        Password:
+        <input type="password" id="school_password">
+        <br>
+        <br>
+        Send info to:
+        <br>
+        (Don't fill the email field if you want to use the school email to receive the information)
+        <br>
+        Email:
+        <input type="text" id="receive_email" autocomplete="off">
+        <br>
+        Phone number:
+        <input type="text" id="receive_phone" autocomplete="off" onkeypress="return onlyNumberKey(event)">
+        <br>
+        Email password:
+        <input type="password" id="email_password">
+        <br>
+        <br>
+        <img src="./images/CAT.png" alt="">
+        <button id="submit_btn">Submit</button>
+    </div>
+   
+</body>
+<script>
+    const onlyNumberKey = (evt) => {
+        // Only ASCII character in that range allowed
+        var ASCIICode = (evt.which) ? evt.which : evt.keyCode
+        if (ASCIICode > 31 && (ASCIICode < 48 || ASCIICode > 57))
+            return false;
+        return true;
+    }
+</script>
+
+</html>
+
