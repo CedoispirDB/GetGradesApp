@@ -31,6 +31,8 @@ function init() {
 
     creatCrontab
 
+    touch .env
+
     cd $origin
 
 }
