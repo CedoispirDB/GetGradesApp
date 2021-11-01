@@ -8,7 +8,7 @@ require("./sendEmail");
 const delay = ms => new Promise(res => setTimeout(res, ms));
 
 const run = async () => {
-    const browser = await puppeteer.launch({ headless: false
+    const browser = await puppeteer.launch({ headless: true
 , executablePath: '/usr/bin/chromium-browser',
     args: ['--no-sandbox', '--disable-setuid-sandbox'], });
     const page = await browser.newPage();
