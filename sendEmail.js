@@ -1,32 +1,38 @@
 const fetch = require("node-fetch");
 require("./utils")
 
-// Send email 
-module.exports = sendEmail = async (info, receiver) => {
-    let text;
-    let url;
+module.exports = sendEmail = async (data, receiver) => {
+    let info = data[0];
+    let old = data[1]
 
-    if (info !== null) {
+    console.log(old)
+    
+    let text = "";
+    let url = "";
+    
+    let oldAvg;
 
-        text = "";
 
-        for (var i = 0; i < info.length; i++) {
-            text = text + `Name: ${info[i][3]}\nAverage: ${info[i][1]}\nGrade: ${info[i][2]}\n\n`;
-        }
-  
-        url = `http://localhost:3000/send?receiver=${receiver}&subject=Gradebook updated&text=${text}`;
-    } else {
-        let date = new Date();
-        let time = date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
-        url = `http://localhost:3000/send?receiver=${receiver}&subject=Checking at ${time}&text=All working`;
-        console.log("sent");
+    for (var i = 0; i < info.length; i++) {
+
+        oldAvg = old[i][0];
+        
+        text = text + `Class: ${info[i][3]}\nGrade: ${old[i][1]} -> ${info[i][2]}\nAverages: ${oldAvg} -> ${info[i][1]}\n\n`
+    
     }
-   
-    await fetch(url);
-        // .then(info => info.json())
-        // .then(data => console.log(data))
 
+  
+    if(receiver.length > 1) {
+        for (var i = 0; i < receiver.length; i++) {
+            url = `http://localhost:4800/send?receiver=${receiver[i]}&subject=Gradebook updated&text=${text}`;
+            await fetch(url);
+        }
+    } else {
+        url = `http://localhost:4800/send?receiver=${receiver[0]}&subject=Gradebook updated&text=${text}`;
+        await fetch(url)
+            // .then(info => info.json())
+            // .then(data => console.log(data))
+    }
 }
-
 
 

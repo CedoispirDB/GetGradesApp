@@ -70,24 +70,25 @@ const run = async () => {
 
 
 run().then((info) => {
-    let option = 1;
-    let comp;
+    let comAve;
+    let comGrade;
 
-    if(option === 1) {
-        comp = compare(info);
-       
-    } else {
-        comp = checkRange(info, 90);
-    }
+    comAve = compareAverage(info);
+    comGrade = compareGrades(info);
 
-    console.log(comp)
+    // console.log("Average: ", comAve)
+    // console.log("Grade: ", comGrade)
 
-    if(comp[0]) {
-        let changedGrades = comp[1];
-        saveData("/home/pi/GetGradesApp/grades.json", info);
-        sendEmail(changedGrades, process.env.RECEIVER);
-    } else {
-        sendEmail(null, process.env.RECEIVER);
-    }
+
+    if(comGrade[0]) {
+        let changedGrades = comGrade[1];
+        saveData("./grades.json", info);
+        sendEmail(changedGrades, [process.env.EXTRAEMAIL, process.env.RECEIVER]);
+    } else if(comAve[0]) {
+        let changedAverage = comAve[1];
+        saveData("./grades.json", info);
+        sendEmail(changedAverage, [process.env.RECEIVER]);
+    } 
+   
 });
 
