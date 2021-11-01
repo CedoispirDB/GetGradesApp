@@ -1,6 +1,7 @@
 const express = require("express");
 const nodemailer = require("nodemailer");
-require("dotenv").config({path:"./.env"});
+var smtpTransport = require('nodemailer-smtp-transport');
+require("dotenv").config({path:"/home/pi/GetGradesApp/.env"});
 require("./dataHandler")
 
 
@@ -27,10 +28,10 @@ app.get("/saveInfo",(request, response) => {
 });
 
 app.get("/send", (request, response) => {
-    const transporter = nodemailer.createTransport({
+    const transporter = nodemailer.createTransport(smtpTransport({
         service: "Hotmail", 
         auth: { user, pass }
-    });
+    }));
 
     transporter.sendMail({
        from: user,

@@ -1,7 +1,8 @@
 require("./dataHandler")
 
 module.exports = compare = (newGrades) => {
-    let currentGrade = getData("./grades.json");
+    let currentGrade = getData("/home/pi/GetGradesApp/grades.json");
+   
 
     let changedGrades = [];
 

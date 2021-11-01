@@ -1,8 +1,7 @@
 #!/bin/bash
 
 function run() {
-    cd ..
-
+    
     NAME="myserver.js" 
     RUN=`pgrep -f $NAME`
 
@@ -10,7 +9,7 @@ function run() {
         RUN=`pgrep -f $NAME`
         if [ "$RUN" == "" ]; then
             echo "Script is not running"
-            node myserver.js&
+            node /home/pi/GetGradesApp/myserver.js&
         else
             echo "Script is running"
             break
@@ -18,7 +17,7 @@ function run() {
         fi
     done
 
-    node ../gradescrapper.js
+    node /home/pi/GetGradesApp/gradescrapper.js
 }
 
 run

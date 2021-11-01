@@ -71,5 +71,15 @@ module.exports = getUserData = (file) => {
     
 }
 
+// for test only
+module.exports = writeTime = () => {
+    let date = new Date();
+    let time = date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
+    let info =  time + "running program"
+    fs.writeFile(file, info, (err) => {
+        console.log("new data saved to " + file);
+    });
+}
+
 // saveData("./grades.json");
 // console.log(getData("./grades.json"));

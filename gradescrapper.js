@@ -1,5 +1,6 @@
 const puppeteer = require("puppeteer");
-require("dotenv").config({ path: "./.env" });
+const sendEmail = require("./sendEmail");
+require("dotenv").config({ path: "/home/pi/GetGradesApp/.env" });
 require("./dataHandler");
 require("./utils");
 require("./sendEmail");
@@ -7,7 +8,9 @@ require("./sendEmail");
 const delay = ms => new Promise(res => setTimeout(res, ms));
 
 const run = async () => {
-    const browser = await puppeteer.launch({ headless: true });
+    const browser = await puppeteer.launch({ headless: false
+, executablePath: '/usr/bin/chromium-browser',
+    args: ['--no-sandbox', '--disable-setuid-sandbox'], });
     const page = await browser.newPage();
 
     let url = "https://plusportals.com/MonsignorPaceHighSchool";
@@ -22,7 +25,7 @@ const run = async () => {
         await page.waitForSelector('input[name=btnsumit]');
 
         // Test the difference between type() and $eval()
-        await page.type('input[name=UserName]', process.env.USERNAME);
+         await page.type('input[name=UserName]', process.env.USERNAME);
         await page.type('input[name=Password]', process.env.PASSWORD);
 
       
@@ -67,10 +70,9 @@ const run = async () => {
 
 
 run().then((info) => {
-    // console.log("here")
     let option = 1;
     let comp;
-    console.log("info: ", info)
+
     if(option === 1) {
         comp = compare(info);
        
@@ -78,10 +80,14 @@ run().then((info) => {
         comp = checkRange(info, 90);
     }
 
+    console.log(comp)
+
     if(comp[0]) {
         let changedGrades = comp[1];
-        saveData("./grades.json", info);
+        saveData("/home/pi/GetGradesApp/grades.json", info);
         sendEmail(changedGrades, process.env.RECEIVER);
+    } else {
+        sendEmail(null, process.env.RECEIVER);
     }
-   
 });
+
